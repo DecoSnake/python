@@ -1,4 +1,3 @@
-python
 import streamlit as st
 import base64
 
@@ -17,9 +16,8 @@ def set_bg_image(image_path):
     """
     st.markdown(css, unsafe_allow_html=True)
 
-Ativa o fundo
+# Ativa o fundo
 set_bg_image("fundo.jpg")
-
 
 import streamlit as st
 import pandas as pd

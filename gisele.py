@@ -2,6 +2,21 @@ import streamlit as st
 import pandas as pd
 from datetime import datetime
 
+# CSS para imagem de fundo
+st.markdown(
+    """
+    <style>
+    .stApp {
+        background-image: url("https://imgur.com/a/YKRAJvB");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
 st.set_page_config(page_title="Convite de Aniversário", page_icon="🎉")
 
 st.title("🎉 Você está convidado!")

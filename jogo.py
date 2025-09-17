@@ -150,5 +150,3 @@ function update() {
 update();
 </script>
 """
-
-display(HTML(html_code))

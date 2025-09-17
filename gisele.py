@@ -7,7 +7,7 @@ st.markdown(
     """
     <style>
     .stApp {
-        background-image: url("https://imgur.com/a/YKRAJvB");
+        background-image: url("https://imgur.com/a/YKRAJvB#WHIaF9y");
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;

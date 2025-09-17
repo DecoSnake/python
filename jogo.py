@@ -1,3 +1,6 @@
+import streamlit as st
+import random
+
 # Inicializa estado da sessão
 if 'snake' not in st.session_state:
     st.session_state.snake = [(5, 5)]

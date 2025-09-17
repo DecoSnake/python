@@ -1,5 +1,3 @@
-from IPython.display import HTML, display
-
 html_code = """
 <canvas id="pongCanvas" width="600" height="400" style="border:1px solid #000;"></canvas>
 

@@ -1,8 +1,3 @@
-import random
-import time
-from IPython.display import clear_output
-from google.colab import output
-
 # Game parameters
 board_size = 10
 snake = [(board_size // 2, board_size // 2)]

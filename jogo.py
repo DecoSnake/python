@@ -1,7 +1,7 @@
 # Game parameters
 board_size = 10
 snake = [(board_size // 2, board_size // 2)]
-food = (random.randint(0, board_size - 1), random.randint(0, board_size - 1))
+food = (random.randint (0, board_size - 1), random.randint (0, board_size - 1))
 # direction = 'RIGHT' # We will now control direction with keys
 score = 0
 

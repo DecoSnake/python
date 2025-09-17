@@ -1,18 +1,3 @@
-# CSS para imagem de fundo
-st.markdown(
-    """
-    <style>
-    .stApp {
-        background-image: url("https://imgur.com/a/YKRAJvB#WHIaF9y");
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
-
 import streamlit as st
 import pandas as pd
 from datetime import datetime

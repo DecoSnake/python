@@ -1,83 +1,78 @@
-import streamlit as st
 import random
+import time
+from IPython.display import clear_output
 
-# Inicializa estado da sessão
-if 'snake' not in st.session_state:
-    st.session_state.snake = [(5, 5)]
-    st.session_state.food = (random.randint(0, 9), random.randint(0, 9))
-    st.session_state.direction = 'RIGHT'
-    st.session_state.score = 0
+# Game parameters
+board_size = 10
+snake = [(board_size // 2, board_size // 2)]
+food = (random.randint(0, board_size - 1), random.randint(0, board_size - 1))
+direction = 'RIGHT'
+score = 0
 
-# Função para mover a minhoca
+def create_food():
+    while True:
+        f = (random.randint(0, board_size - 1), random.randint(0, board_size - 1))
+        if f not in snake:
+            return f
+
 def move_snake():
-    head_x, head_y = st.session_state.snake[0]
-    if st.session_state.direction == 'UP':
+    global snake, food, direction, score
+
+    head_x, head_y = snake[0]
+
+    if direction == 'UP':
         new_head = (head_x, head_y - 1)
-    elif st.session_state.direction == 'DOWN':
+    elif direction == 'DOWN':
         new_head = (head_x, head_y + 1)
-    elif st.session_state.direction == 'LEFT':
+    elif direction == 'LEFT':
         new_head = (head_x - 1, head_y)
-    else:  # RIGHT
+    elif direction == 'RIGHT':
         new_head = (head_x + 1, head_y)
 
-    # Verifica colisão
-    if (new_head in st.session_state.snake or
-        not (0 <= new_head[0] < 10 and 0 <= new_head[1] < 10)):
-        st.session_state.snake = [(5, 5)]
-        st.session_state.direction = 'RIGHT'
-        st.session_state.score = 0
-        st.session_state.food = (random.randint(0, 9), random.randint(0, 9))
+    # Check for collision with walls or self
+    if (new_head in snake or
+        not (0 <= new_head[0] < board_size and 0 <= new_head[1] < board_size)):
+        print("Game Over!")
+        print(f"Final Score: {score}")
+        # Reset game
+        snake = [(board_size // 2, board_size // 2)]
+        food = create_food()
+        direction = 'RIGHT'
+        score = 0
+        time.sleep(2) # Pause before restarting
+        return False # Indicate game over
+
+    snake.insert(0, new_head)
+
+    # Check for food
+    if new_head == food:
+        score += 1
+        food = create_food()
     else:
-        st.session_state.snake.insert(0, new_head)
-        # Verifica se comeu a comida
-        if new_head == st.session_state.food:
-            st.session_state.score += 1
-            st.session_state.food = (random.randint(0, 9), random.randint(0, 9))
-        else:
-            st.session_state.snake.pop()
+        snake.pop()
 
-# Streamlit UI
-st.title("Snake Game")
+    return True # Indicate game is ongoing
 
-# Botões de direção
-col1, col2, col3 = st.columns(3)
-with col2:
-    if st.button("UP"):
-        if st.session_state.direction != 'DOWN':
-            st.session_state.direction = 'UP'
-with col1:
-    if st.button("LEFT"):
-        if st.session_state.direction != 'RIGHT':
-            st.session_state.direction = 'LEFT'
-with col3:
-    if st.button("RIGHT"):
-        if st.session_state.direction != 'LEFT':
-            st.session_state.direction = 'RIGHT'
-col1, col2, col3 = st.columns(3)
-with col2:
-    if st.button("DOWN"):
-        if st.session_state.direction != 'UP':
-            st.session_state.direction = 'DOWN'
+def draw_board():
+    clear_output(wait=True)
+    for y in range(board_size):
+        row = ""
+        for x in range(board_size):
+            if (x, y) in snake:
+                row += "🟢"
+            elif (x, y) == food:
+                row += "🍎"
+            else:
+                row += "⬜"
+        print(row)
+    print(f"Score: {score}")
 
-# Mover a minhoca em cada atualização
-move_snake()
+# Game loop
+print("Starting Snake Game (text-based)...")
+time.sleep(1)
 
-# Desenha o tabuleiro
-board_size = 10
-for y in range(board_size):
-    row = ""
-    for x in range(board_size):
-        if (x, y) in st.session_state.snake:
-            row += "🟢"
-        elif (x, y) == st.session_state.food:
-            row += "🍎"
-        else:
-            row += "⬜"
-    st.markdown(row)
-
-st.write(f"Score: {st.session_state.score}")
-
-# Auto-refresh (para animação básica, pode não ser ideal para jogos rápidos)
-# import time
-# time.sleep(0.5)
-# st.experimental_rerun()
+game_on = True
+while game_on:
+    draw_board()
+    game_on = move_snake()
+    time.sleep(0.5) # Adjust speed here

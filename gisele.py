@@ -1,7 +1,3 @@
-import streamlit as st
-import pandas as pd
-from datetime import datetime
-
 # CSS para imagem de fundo
 st.markdown(
     """
@@ -16,6 +12,10 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
+
+import streamlit as st
+import pandas as pd
+from datetime import datetime
 
 st.set_page_config(page_title="Convite de Aniversário", page_icon="🎉")
 
